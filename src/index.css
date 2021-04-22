@@ -55,7 +55,58 @@ html,
   transition: all 0.3s;
 }
 
-.auth-wrapper .form-control:focus {
+/* SVG placement for both login and user sign up*/
+
+.loginSvgDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.loginSvg {
+  text-indent: -9999px;
+  width: 100px;
+  height: 82px;
+  background: url(login.svg);
+  background-size: 100px 82px;
+}
+
+.signupSvgDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.signupSvg {
+  text-indent: -9999px;
+  width: 100px;
+  height: 82px;
+  background: url(signup.svg);
+  background-size: 100px 82px;
+}
+
+/*End of SVG placement for both login and user sign up*/
+
+
+/* Submit button SVG animation */
+
+.submitSvgDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.submitSvg {
+  text-indent: -9999px;
+  width: 100px;
+  height: 82px;
+  background: url(submit.svg);
+  background-size: 100px 82px;
+}
+
+
+
+.login .auth-wrapper .form-control:focus {
   border-color: #167bff;
   box-shadow: none;
 }
