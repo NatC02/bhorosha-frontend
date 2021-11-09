@@ -20,19 +20,18 @@ const users = [
 
 let refreshTokens = [];
 
-app.post("/api/login", (req, res) => {
+app.post("/api/refresh", (req, res) => {
   // take the refresh token from the request user (the request body)
   const refreshToken = req.body.token;
 
   // send error if there is no token or it's invalid
-  if (!refreshToken)
-    return res.sendStatus(401).json("You are no authenticated!");
+  if (!refreshToken) return res.status(401).json("You are not authenticated!");
   if (!refreshTokens.includes(refreshToken)) {
-    return res.sendStatus(403).json("Invalid refresh token!");
+    return res.status(403).json("Refresh token is not valid!");
   }
   jwt.verify(refreshToken, "myRefreshSecretKey", (err, user) => {
     err && console.log(err);
-    refreshTokens = resfreshTokens.filter((token) => token !== refreshToken);
+    refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
 
     const newAccessToken = generateAccessToken(user);
     const newRefreshToken = generateRefreshToken(user);
@@ -46,20 +45,17 @@ app.post("/api/login", (req, res) => {
   });
 
   // if everything is ok, generate a new access token and refresh token to send to user
-
-  const generateAccessToken = (user) => {
-    return jwt.sign({ id: user.id, isAdmin: user.isAdmin }, "mySecretKey", {
-      expiresIn: "5s",
-    });
-  };
-
-  const generateRefreshToken = (user) => {
-    return jwt.sign(
-      { id: user.id, isAdmin: user.isAdmin },
-      "myRefreshSecretKey"
-    );
-  };
 });
+
+const generateAccessToken = (user) => {
+  return jwt.sign({ id: user.id, isAdmin: user.isAdmin }, "mySecretKey", {
+    expiresIn: "5s",
+  });
+};
+
+const generateRefreshToken = (user) => {
+  return jwt.sign({ id: user.id, isAdmin: user.isAdmin }, "myRefreshSecretKey");
+};
 
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
